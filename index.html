@@ -28,14 +28,14 @@ body{font-family:var(--sans);color:var(--t);}
 .app{display:grid;grid-template-rows:48px 1fr;height:100vh;}
 
 /* TOPBAR */
-.topbar{background:var(--bg2);border-bottom:1px solid var(--b2);display:flex;align-items:center;padding:0 10px;gap:6px;z-index:30;flex-shrink:0;overflow:hidden;width:100%;}
-.logo{font-family:var(--serif);font-size:17px;color:var(--t);letter-spacing:0.04em;display:flex;align-items:center;gap:6px;margin-right:4px;flex-shrink:0;min-width:0;}
+.topbar{background:var(--bg2);border-bottom:1px solid var(--b2);display:flex;align-items:center;padding:0 16px;gap:8px;z-index:30;flex-shrink:0;}
+.logo{font-family:var(--serif);font-size:17px;color:var(--t);letter-spacing:0.04em;display:flex;align-items:center;gap:7px;margin-right:6px;flex-shrink:0;}
 .logo-sq{width:20px;height:20px;border:1.5px solid var(--acc);border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:10px;color:var(--acc);}
 .nav-tabs{display:flex;gap:1px;}
 .nav-tab{padding:5px 12px;font-size:11px;letter-spacing:0.07em;text-transform:uppercase;color:var(--t2);cursor:pointer;border-radius:3px;border:none;background:transparent;font-family:var(--sans);transition:all .13s;}
 .nav-tab:hover{color:var(--t);}
 .nav-tab.active{color:var(--acc2);background:var(--accbg);}
-.topbar-r{margin-left:auto;display:flex;gap:4px;align-items:center;flex-shrink:0;}
+.topbar-r{margin-left:auto;display:flex;gap:6px;align-items:center;}
 .proj-sw{display:flex;align-items:center;gap:5px;padding:4px 9px;background:var(--bg3);border:0.5px solid var(--b2);border-radius:4px;cursor:pointer;transition:all .13s;}
 .proj-sw:hover{border-color:var(--b3);}
 .proj-sw-name{font-family:var(--serif);font-size:12px;color:var(--t2);font-style:italic;max-width:130px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
@@ -147,17 +147,9 @@ body{font-family:var(--sans);color:var(--t);}
 .beat-card.depth-2{margin-left:10px;border-left:2px solid var(--accbord);}
 .beat-card.depth-3{margin-left:20px;border-left:2px solid rgba(110,80,180,0.4);}
 .beat-card.depth-4{margin-left:28px;border-left:2px solid rgba(50,140,130,0.4);}
-.beat-card-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;}
-.beat-drag-handle{width:28px;height:28px;display:flex;align-items:center;justify-content:center;color:var(--t3);cursor:grab;border-radius:4px;flex-shrink:0;font-size:15px;touch-action:none;-webkit-user-select:none;user-select:none;}
-.beat-drag-handle:hover{color:var(--t2);background:var(--bg4);}
-.beat-drag-handle:active{cursor:grabbing;}
-.beat-card-actions{display:flex;gap:2px;opacity:0;transition:opacity .15s;}
-.beat-card:hover .beat-card-actions,.beat-card.touch-active .beat-card-actions{opacity:1;}
-.beat-act-btn{width:26px;height:26px;display:flex;align-items:center;justify-content:center;background:transparent;border:none;color:var(--t2);cursor:pointer;border-radius:3px;font-size:13px;transition:all .11s;}
-.beat-act-btn:hover{color:var(--t);background:var(--bg4);}
-.beat-act-del:hover{color:var(--red-fg);}
-.beat-lbl{font-size:9px;letter-spacing:.09em;text-transform:uppercase;color:var(--t2);margin-bottom:3px;}
-.beat-txt{font-size:12px;color:var(--t);line-height:1.5;font-family:var(--serif);}
+.beat-grip{position:absolute;top:6px;right:6px;color:var(--t3);font-size:12px;}
+.beat-lbl{font-size:9px;letter-spacing:.09em;text-transform:uppercase;color:var(--t2);margin-bottom:3px;padding-right:15px;}
+.beat-txt{font-size:12px;color:var(--t);line-height:1.5;font-family:var(--serif);padding-right:6px;}
 .beat-foot{display:flex;align-items:center;gap:3px;margin-top:5px;flex-wrap:wrap;}
 .btype{font-size:9px;padding:1px 6px;border-radius:8px;letter-spacing:.04em;text-transform:uppercase;font-weight:700;}
 .bt-conflit{background:var(--red-bg);color:var(--red-fg);}
@@ -165,6 +157,9 @@ body{font-family:var(--sans);color:var(--t);}
 .bt-tournant{background:var(--teal-bg);color:var(--teal-fg);}
 .bt-emotion{background:var(--amber-bg);color:var(--amber-fg);}
 .bt-action{background:var(--gray-bg);color:var(--gray-fg);}
+.beat-del-btn{margin-left:auto;background:transparent;border:none;color:var(--t3);cursor:pointer;font-size:12px;opacity:0;transition:opacity .11s;}
+.beat-card:hover .beat-del-btn{opacity:1;}
+.beat-del-btn:hover{color:var(--red-fg);}
 .beat-lnk-badge{font-size:9px;color:var(--acc2);background:var(--accbg);padding:1px 5px;border-radius:6px;}
 .add-beat-btn{border:0.5px dashed var(--b2);border-radius:4px;padding:6px;text-align:center;font-size:11px;color:var(--t2);cursor:pointer;transition:all .11s;}
 .add-beat-btn:hover{border-color:var(--acc);color:var(--acc2);background:var(--accbg);}
@@ -293,154 +288,164 @@ body{font-family:var(--sans);color:var(--t);}
 .notif{position:fixed;bottom:16px;right:16px;background:var(--bg3);border:0.5px solid var(--b2);color:var(--t);font-size:12px;padding:7px 14px;border-radius:5px;opacity:0;transform:translateY(6px);transition:all .22s;pointer-events:none;z-index:999;}
 .notif.show{opacity:1;transform:translateY(0);}
 
-
-/* ── CHAPTER NAV BAR (inside editor, always visible) ── */
-.chap-nav{display:flex;align-items:center;gap:0;padding:0 8px;border-bottom:0.5px solid var(--b);background:var(--bg2);flex-shrink:0;overflow:hidden;position:relative;}
-.chap-nav-prev,.chap-nav-next{width:28px;height:36px;display:flex;align-items:center;justify-content:center;background:transparent;border:none;color:var(--t2);cursor:pointer;font-size:15px;flex-shrink:0;transition:color .11s;}
+.chap-nav{display:flex;align-items:center;border-bottom:0.5px solid var(--b);background:var(--bg2);flex-shrink:0;}
+.chap-nav-prev,.chap-nav-next{width:28px;height:36px;display:flex;align-items:center;justify-content:center;background:transparent;border:none;color:var(--t2);cursor:pointer;font-size:15px;flex-shrink:0;}
 .chap-nav-prev:hover,.chap-nav-next:hover{color:var(--t);}
 .chap-nav-prev:disabled,.chap-nav-next:disabled{opacity:.25;cursor:default;}
-.chap-nav-tabs{display:flex;gap:0;overflow-x:auto;flex:1;scrollbar-width:none;}
+.chap-nav-tabs{display:flex;overflow-x:auto;flex:1;scrollbar-width:none;}
 .chap-nav-tabs::-webkit-scrollbar{display:none;}
-.chap-nav-tab{padding:0 13px;height:36px;display:flex;align-items:center;font-size:12px;color:var(--t2);cursor:pointer;white-space:nowrap;border-bottom:2px solid transparent;flex-shrink:0;transition:all .13s;font-family:var(--sans);background:transparent;border-top:none;border-left:none;border-right:none;}
+.chap-nav-tab{padding:0 13px;height:36px;display:flex;align-items:center;font-size:12px;color:var(--t2);cursor:pointer;white-space:nowrap;border-bottom:2px solid transparent;flex-shrink:0;background:transparent;border-top:none;border-left:none;border-right:none;font-family:var(--sans);}
 .chap-nav-tab:hover{color:var(--t);}
 .chap-nav-tab.active{color:var(--acc2);border-bottom-color:var(--acc);}
-.chap-nav-add{width:32px;height:36px;display:flex;align-items:center;justify-content:center;background:transparent;border:none;color:var(--t3);cursor:pointer;font-size:16px;flex-shrink:0;transition:color .11s;border-left:0.5px solid var(--b);margin-left:4px;}
+.chap-nav-add{width:32px;height:36px;display:flex;align-items:center;justify-content:center;background:transparent;border:none;color:var(--t3);cursor:pointer;font-size:16px;flex-shrink:0;border-left:0.5px solid var(--b);}
 .chap-nav-add:hover{color:var(--acc2);}
 
+/* ── Beat card layout ── */
+.beat-card-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;}
+.beat-drag-handle{width:28px;height:28px;display:flex;align-items:center;justify-content:center;color:var(--t3);cursor:grab;border-radius:4px;flex-shrink:0;font-size:15px;touch-action:none;-webkit-user-select:none;user-select:none;}
+.beat-drag-handle:hover{color:var(--t2);background:var(--bg4);}
+.beat-drag-handle:active{cursor:grabbing;}
+.beat-card-actions{display:flex;gap:2px;opacity:0;transition:opacity .15s;}
+.beat-card:hover .beat-card-actions,.beat-card.touch-active .beat-card-actions{opacity:1;}
+.beat-act-btn{width:26px;height:26px;display:flex;align-items:center;justify-content:center;background:transparent;border:none;color:var(--t2);cursor:pointer;border-radius:3px;font-size:13px;transition:all .11s;}
+.beat-act-btn:hover{color:var(--t);background:var(--bg4);}
+.beat-act-del:hover{color:var(--red-fg);}
 
-/* ── GOOGLE DRIVE SYNC ── */
+/* ── Drive button ── */
 .drive-btn{display:flex;align-items:center;gap:5px;padding:4px 10px;border-radius:4px;font-size:11px;cursor:pointer;border:0.5px solid var(--b2);background:var(--bg3);color:var(--t2);font-family:var(--sans);transition:all .13s;white-space:nowrap;}
 .drive-btn:hover{border-color:var(--b3);color:var(--t);}
-.drive-btn.connected{border-color:rgba(52,168,83,0.4);color:#52a853;background:rgba(52,168,83,0.08);}
+.drive-btn.connected{border-color:rgba(52,168,83,.4);color:#52a853;background:rgba(52,168,83,.08);}
 .drive-btn.syncing{border-color:var(--accbord);color:var(--acc2);background:var(--accbg);}
 .drive-btn.error{border-color:rgba(180,60,55,.35);color:var(--red-fg);background:var(--red-bg);}
 .drive-dot{width:6px;height:6px;border-radius:50%;background:currentColor;flex-shrink:0;}
-.drive-dot.pulse{animation:pulse 1.4s ease-in-out infinite;}
-.save-label{}
-.beats-md-label{}
-@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.35;}}
+.drive-dot.pulse{animation:drivepulse 1.4s ease-in-out infinite;}
+@keyframes drivepulse{0%,100%{opacity:1;}50%{opacity:.35;}}
 
-/* ── RESPONSIVE MOBILE ─────────────────────────────────── */
-
-/* Mobile bottom nav — hidden by default on desktop */
+/* ── Mobile ── */
 .mob-nav{display:none;}
-
 @media(max-width:700px){
-  /* ── Root: full viewport height, no overflow ── */
   html,body{height:100%;width:100%;overflow:hidden;}
-
-  /* ── App grid ── */
   .app{grid-template-rows:48px 1fr;height:100vh;height:100dvh;}
-
-  /* ── Topbar ── */
-  .topbar{padding:0 8px;gap:4px;}
+  .topbar{padding:0 8px;gap:4px;overflow:hidden;width:100%;}
   .nav-tabs{display:none;}
-  /* hide all topbar-r buttons except Drive dot and Save */
   .topbar-r .btn-g{display:none;}
-  .topbar-r{gap:4px;}
-  /* project switcher: compact */
+  .topbar-r{gap:4px;flex-shrink:0;}
   .proj-sw{padding:4px 7px;}
   .proj-sw-name{max-width:80px;font-size:11px;}
-  .proj-sw i.ti-chevron-down{display:none;}
-  /* drive button: dot only */
   .drive-btn{padding:4px 7px;min-width:28px;justify-content:center;}
-  .drive-btn span.drive-label{display:none;}
-  /* save button: icon + text compressed */
-  .topbar-r .btn{padding:5px 9px;font-size:10px;letter-spacing:0.04em;}
-  .topbar-r .btn span.drive-label{display:inline;}
-  /* logo text hidden on very small screens */
+  .drive-btn .drive-label{display:none;}
+  .topbar-r .btn{padding:5px 9px;font-size:10px;}
   .logo-text{display:none;}
-
-  /* ── Body: full width, no sidebar, space for bottom nav ── */
-  .body{
-    grid-template-columns:1fr;
-    height:calc(100vh - 48px);
-    height:calc(100dvh - 48px);
-    overflow:hidden;
-  }
+  .body{grid-template-columns:1fr;height:calc(100vh - 48px);height:calc(100dvh - 48px);overflow:hidden;padding-bottom:56px;}
   .sidebar{display:none;}
-
-  /* ── All panels fill available space ── */
-  .panel{height:100%;}
-
-  /* ── Editor ── */
   .ed-grid{grid-template-columns:1fr;height:100%;}
   .ed-col{height:100%;overflow:hidden;}
   .inspector{display:none;}
-  .ed-body{padding:16px 18px;height:calc(100% - 88px);overflow-y:auto;}
+  .ed-body{padding:16px 18px;overflow-y:auto;}
   .doc-title{font-size:20px;}
-  .ed-ta{min-height:60vh;}
-
-  /* ── Beats board: single column, full height scrollable ── */
-  .panel#panel-beats{flex-direction:column;}
-  .beats-board{
-    flex-direction:column;
-    padding:10px;
-    overflow-y:auto;
-    overflow-x:hidden;
-    flex:1;
-    align-items:stretch;
-    padding-bottom:60px;
-  }
-  .act-col{width:100% !important;flex-shrink:0;}
-  .act-body{min-height:80px;}
-  /* always visible beat actions */
-  .beat-card-actions{opacity:1 !important;}
-  .beat-act-btn{width:36px;height:36px;font-size:17px;}
-  .beat-drag-handle{width:36px;height:36px;font-size:18px;}
-
-  /* ── Saga tabs scrollable ── */
-  .saga-tabs{overflow-x:auto;flex-shrink:0;}
-
-  /* ── Chapter nav tabs ── */
   .chap-nav-tab{font-size:13px;padding:0 14px;height:42px;}
   .chap-nav-prev,.chap-nav-next{width:34px;height:42px;}
   .chap-nav-add{width:40px;height:42px;font-size:18px;}
-
-  /* ── DB grid: 1 column ── */
+  #panel-beats{flex-direction:column;}
+  .beats-board{flex-direction:column;padding:10px;overflow-y:auto;overflow-x:hidden;flex:1;align-items:stretch;padding-bottom:70px;}
+  .act-col{width:100% !important;flex-shrink:0;}
+  .act-body{min-height:80px;}
+  .beat-card-actions{opacity:1 !important;}
+  .beat-act-btn{width:36px;height:36px;font-size:17px;}
+  .beat-drag-handle{width:36px;height:36px;font-size:18px;}
+  .saga-tabs{overflow-x:auto;flex-shrink:0;}
   .db-grid{grid-template-columns:1fr;}
-  .db-body{padding-bottom:60px;}
-
-  /* ── Overview ── */
-  .ov-body{padding-bottom:60px;}
-  .matrix th:nth-child(3),.matrix td:nth-child(3),
-  .matrix th:nth-child(4),.matrix td:nth-child(4){display:none;}
-
-  /* ── Modals: full width ── */
-  .modal,.picker-modal,.pm-modal,.import-modal{
-    width:calc(100vw - 20px) !important;
-    max-height:88vh;
-    max-height:88dvh;
-  }
-
-  /* ── Mobile bottom nav ── */
-  .mob-nav{
-    display:flex;
-    position:fixed;
-    bottom:0;left:0;right:0;
-    height:56px;
-    background:var(--bg2);
-    border-top:1px solid var(--b2);
-    z-index:50;
-    justify-content:space-around;
-    align-items:center;
-    padding-bottom:env(safe-area-inset-bottom, 0px);
-  }
-  .mob-nav-btn{
-    display:flex;flex-direction:column;align-items:center;gap:2px;
-    color:var(--t2);cursor:pointer;font-size:9px;letter-spacing:.06em;
-    text-transform:uppercase;padding:4px 6px;border-radius:5px;
-    transition:all .13s;border:none;background:transparent;font-family:var(--sans);
-    -webkit-tap-highlight-color:transparent;
-  }
+  .db-body,.ov-body{padding-bottom:70px;}
+  .matrix th:nth-child(3),.matrix td:nth-child(3),.matrix th:nth-child(4),.matrix td:nth-child(4){display:none;}
+  .modal,.picker-modal,.pm-modal{width:calc(100vw - 20px) !important;max-height:88dvh;}
+  .mob-nav{display:flex;position:fixed;bottom:0;left:0;right:0;height:56px;background:var(--bg2);border-top:1px solid var(--b2);z-index:50;justify-content:space-around;align-items:center;padding-bottom:env(safe-area-inset-bottom,0px);}
+  .mob-nav-btn{display:flex;flex-direction:column;align-items:center;gap:2px;color:var(--t2);cursor:pointer;font-size:9px;letter-spacing:.06em;text-transform:uppercase;padding:4px 6px;border-radius:5px;border:none;background:transparent;font-family:var(--sans);-webkit-tap-highlight-color:transparent;}
   .mob-nav-btn i{font-size:22px;}
   .mob-nav-btn.active{color:var(--acc2);}
-
-  /* ── Add bottom padding to panels for nav bar ── */
-  .body{padding-bottom:56px;}
 }
 </style>
-<script src="https://accounts.google.com/gsi/client" async></script>
+<script src="https://accounts.google.com/gsi/client" async>
+// ══ GOOGLE DRIVE ══════════════════════════════════════════
+const DRIVE_CLIENT_ID='951564933990-oh5n6buha9bncmn8gu00edv3f1gecah4.apps.googleusercontent.com';
+const DRIVE_SCOPES='https://www.googleapis.com/auth/drive.file';
+const DRIVE_FILENAME='le-redacteur-data.json';
+let _driveToken=null,_driveFileId=null,_driveSaveTimer=null,_gapiReady=false,_gisReady=false;
+function driveIsConnected(){return!!_driveToken;}
+function driveSetStatus(state,label){
+  const btn=document.getElementById('drive-btn'),dot=document.getElementById('drive-dot'),lbl=document.getElementById('drive-label');
+  if(!btn)return;
+  btn.className='drive-btn'+(state?' '+state:'');
+  dot.className='drive-dot'+(state==='syncing'?' pulse':'');
+  lbl.textContent=label||'Drive';
+}
+function driveInit(){
+  const tryGapi=()=>{if(typeof gapi==='undefined'){setTimeout(tryGapi,600);return;}
+    gapi.load('client',()=>{gapi.client.init({discoveryDocs:['https://www.googleapis.com/discovery/v1/apis/drive/v3/rest']}).then(()=>{_gapiReady=true;driveCheckReady();});});};
+  tryGapi();
+  const t=setInterval(()=>{if(typeof google!=='undefined'&&google.accounts){clearInterval(t);_gisReady=true;driveCheckReady();}},400);
+}
+function driveCheckReady(){
+  if(!_gapiReady||!_gisReady)return;
+  try{const s=localStorage.getItem('lr-drive-token');if(s){const t=JSON.parse(s);if(t.expires>Date.now()){_driveToken=t.token;gapi.client.setToken({access_token:_driveToken});driveSetStatus('connected','Drive ✓');driveLoadIfNewer();return;}}}catch(e){}
+  driveSetStatus('','Drive');
+}
+function driveToggle(){if(driveIsConnected())driveDisconnect();else driveConnect();}
+function driveConnect(){
+  if(!_gisReady||!_gapiReady){notify('Chargement API…');setTimeout(driveConnect,800);return;}
+  driveSetStatus('syncing','Connexion…');
+  const client=google.accounts.oauth2.initTokenClient({client_id:DRIVE_CLIENT_ID,scope:DRIVE_SCOPES,
+    callback:(resp)=>{
+      if(resp.error){driveSetStatus('error','Erreur');notify('Erreur: '+resp.error);return;}
+      _driveToken=resp.access_token;gapi.client.setToken({access_token:_driveToken});
+      localStorage.setItem('lr-drive-token',JSON.stringify({token:_driveToken,expires:Date.now()+55*60*1000}));
+      driveSetStatus('connected','Drive ✓');notify('✓ Connecté à Drive');driveLoadIfNewer();
+    }});
+  client.requestAccessToken({prompt:''});
+}
+function driveDisconnect(){
+  const tok=_driveToken;_driveToken=null;_driveFileId=null;
+  localStorage.removeItem('lr-drive-token');
+  if(typeof gapi!=='undefined')gapi.client.setToken(null);
+  try{if(typeof google!=='undefined'&&tok)google.accounts.oauth2.revoke(tok,()=>{});}catch(e){}
+  driveSetStatus('','Drive');notify('Déconnecté de Drive');
+}
+async function driveFindFile(){
+  if(_driveFileId)return _driveFileId;
+  const res=await gapi.client.drive.files.list({q:"name='"+DRIVE_FILENAME+"' and trashed=false",spaces:'drive',fields:'files(id)'});
+  const files=res.result.files||[];
+  if(files.length){_driveFileId=files[0].id;return _driveFileId;}
+  const meta=await gapi.client.drive.files.create({resource:{name:DRIVE_FILENAME,mimeType:'application/json'},fields:'id'});
+  _driveFileId=meta.result.id;return _driveFileId;
+}
+function driveSave(){
+  clearTimeout(_driveSaveTimer);
+  _driveSaveTimer=setTimeout(async()=>{
+    if(!driveIsConnected())return;driveSetStatus('syncing','Sync…');
+    try{
+      const fileId=await driveFindFile();
+      await gapi.client.request({path:'/upload/drive/v3/files/'+fileId,method:'PATCH',params:{uploadType:'media'},headers:{'Content-Type':'application/json'},body:JSON.stringify({projects,currentProjectId})});
+      driveSetStatus('connected','Drive ✓');
+    }catch(e){console.error(e);driveSetStatus('error','Erreur Drive');}
+  },1800);
+}
+async function driveLoadIfNewer(){
+  if(!driveIsConnected())return;driveSetStatus('syncing','Chargement…');
+  try{
+    const fileId=await driveFindFile();if(!fileId){driveSetStatus('connected','Drive ✓');return;}
+    const res=await gapi.client.drive.files.get({fileId,alt:'media'});
+    const data=typeof res.result==='string'?JSON.parse(res.result):res.result;
+    if(data&&data.projects&&data.projects.length){
+      projects=data.projects;currentProjectId=data.currentProjectId||projects[0].id;
+      S=projects.find(p=>p.id===currentProjectId)?.data||projects[0].data;
+      ensureChapter();
+      try{localStorage.setItem(STORE_KEY,JSON.stringify({projects,currentProjectId}));}catch(e){}
+      renderSidebar();loadEditor();if(typeof renderSagaTabs==='function')renderSagaTabs();
+      driveSetStatus('connected','Drive ✓');notify('✓ Données chargées depuis Drive');
+    }else{driveSave();}
+  }catch(e){console.error(e);if(!_driveFileId)driveSave();else driveSetStatus('error','Erreur');}
+}
+// ══ END DRIVE ═════════════════════════════════════════════
+</script>
 <script src="https://apis.google.com/js/api.js" async></script>
 </head>
 <body>
@@ -460,14 +465,11 @@ body{font-family:var(--sans);color:var(--t);}
       <span class="proj-sw-name" id="proj-badge">—</span>
       <i class="ti ti-chevron-down" style="font-size:11px;color:var(--t3)"></i>
     </div>
-    <button class="btn btn-g" onclick="openMdImport()"><i class="ti ti-file-import"></i> <span class="drive-label">Importer MD</span></button>
-    <button class="btn btn-g" onclick="exportProject()"><i class="ti ti-download"></i> <span class="drive-label">Exporter</span></button>
-    <button class="btn btn-g" onclick="importProjectFile()"><i class="ti ti-upload"></i> <span class="drive-label">Importer</span></button>
-    <button class="drive-btn" id="drive-btn" onclick="driveToggle()" title="Synchronisation Google Drive">
-      <div class="drive-dot" id="drive-dot"></div>
-      <span class="drive-label" id="drive-label">Drive</span>
-    </button>
-    <button class="btn" onclick="saveProject()" title="Sauvegarder (Ctrl+S)"><i class="ti ti-device-floppy"></i> <span class="save-label"> Sauv.</span></button>
+    <button class="btn btn-g" onclick="openMdImport()"><i class="ti ti-file-import"></i> Importer MD</button>
+    <button class="btn btn-g" onclick="exportProject()"><i class="ti ti-download"></i> Exporter</button>
+    <button class="btn btn-g" onclick="importProjectFile()"><i class="ti ti-upload"></i> Importer</button>
+    <button class="drive-btn" id="drive-btn" onclick="driveToggle()" title="Google Drive"><div class="drive-dot" id="drive-dot"></div><span class="drive-label" id="drive-label">Drive</span></button>
+    <button class="btn" onclick="saveProject()" title="Sauvegarder"><i class="ti ti-device-floppy"></i> <span>Sauv.</span></button>
   </div>
 </div>
 <div class="body">
@@ -504,9 +506,9 @@ body{font-family:var(--sans);color:var(--t);}
   <div class="ed-grid" style="flex:1;overflow:hidden;">
     <div class="ed-col">
       <div class="chap-nav" id="chap-nav">
-        <button class="chap-nav-prev" id="chap-prev" onclick="chapNavStep(-1)" title="Chapitre précédent"><i class="ti ti-chevron-left"></i></button>
+        <button class="chap-nav-prev" id="chap-prev" onclick="chapNavStep(-1)"><i class="ti ti-chevron-left"></i></button>
         <div class="chap-nav-tabs" id="chap-nav-tabs"></div>
-        <button class="chap-nav-next" id="chap-next" onclick="chapNavStep(1)" title="Chapitre suivant"><i class="ti ti-chevron-right"></i></button>
+        <button class="chap-nav-next" id="chap-next" onclick="chapNavStep(1)"><i class="ti ti-chevron-right"></i></button>
         <button class="chap-nav-add" onclick="addChapter()" title="Nouveau chapitre"><i class="ti ti-plus"></i></button>
       </div>
       <div class="ed-tb">
@@ -563,7 +565,7 @@ body{font-family:var(--sans);color:var(--t);}
 </div>
 
 <!-- BEATS -->
-<div class="panel" id="panel-beats" style="flex-direction:column;">
+<div class="panel" id="panel-beats">
   <div class="beats-hd">
     <i class="ti ti-layout-board-split" style="font-size:17px;color:var(--acc2)"></i>
     <span class="beats-title">Tableau des beats</span>
@@ -574,7 +576,7 @@ body{font-family:var(--sans);color:var(--t);}
       <option value="journey">Hero's Journey</option>
     </select>
     <button class="btn btn-g" style="margin-left:auto;" onclick="openBeatModal(null)"><i class="ti ti-plus"></i> Beat</button>
-    <button class="btn btn-g" onclick="openMdImport()" title="Importer depuis un fichier Markdown"><i class="ti ti-file-import"></i> <span class="beats-md-label">Importer MD</span></button>
+    <button class="btn btn-g" onclick="openMdImport()" title="Importer Markdown"><i class="ti ti-file-import"></i> Importer MD</button>
   </div>
   <!-- saga tabs -->
   <div class="saga-tabs" id="saga-tabs"></div>
@@ -674,7 +676,7 @@ body{font-family:var(--sans);color:var(--t);}
 const STRUCT_COLS={
   '3actes':['Acte I','Acte II-A','Acte II-B','Acte III'],
   'blake':['Opening Image','Setup & Catalyst','Fun & Games','Dark Night & Finale'],
-  'journey':['Monde ordinaire','L\'épreuve','Retour & transformation'],
+  'journey':['Monde ordinaire','L'épreuve','Retour & transformation'],
 };
 const TYPE_META={
   action:{bg:'var(--gray-bg)',fg:'var(--gray-fg)',dot:'#888'},
@@ -742,7 +744,7 @@ function loadAll(){
   S=projects.find(p=>p.id===currentProjectId).data;
   ensureChapter();
 }
-function saveAll(){try{localStorage.setItem(STORE_KEY,JSON.stringify({projects,currentProjectId}));}catch(e){notify('Erreur sauvegarde');}}
+function saveAll(){try{localStorage.setItem(STORE_KEY,JSON.stringify({projects,currentProjectId}));}catch(e){notify('Erreur sauvegarde');}if(typeof driveIsConnected==='function'&&driveIsConnected())driveSave();}
 function createProject(name){const id='proj-'+Date.now();const p={id,name,data:emptyProject(name)};projects.push(p);return p;}
 function switchProject(id){
   saveCurrentChapter();currentProjectId=id;S=projects.find(p=>p.id===id).data;ensureChapter();closePM();
@@ -834,8 +836,14 @@ function setStatus(v){const c=gChap(S.activeChapter);if(c){c.status=v;renderDocM
 function updateWC(){const t=document.getElementById('ed-ta').value.trim();const w=t?t.split(/\s+/).length:0;document.getElementById('wc').textContent=w+' mot'+(w!==1?'s':'');}
 function onEditorInput(){updateWC();renderMentions();}
 function execCmd(cmd){document.execCommand(cmd);}
-function insertSceneHead(){document.getElementById('ed-ta').value+='\n\nINT. — LIEU — MOMENT\n\n';updateWC();}
-function insertDialogue(){document.getElementById('ed-ta').value+='\n\n— ';updateWC();}
+function insertSceneHead(){document.getElementById('ed-ta').value+='\
+\
+INT. — LIEU — MOMENT\
+\
+';updateWC();}
+function insertDialogue(){document.getElementById('ed-ta').value+='\
+\
+— ';updateWC();}
 function saveNotes(){const c=gChap(S.activeChapter);if(c)c.notes=document.getElementById('scene-notes').value;}
 function addChapter(){
   saveCurrentChapter();const id='c'+Date.now();
@@ -907,7 +915,7 @@ function renderLinker(q){
     const items=g.items.filter(i=>!q||(i.name||'').toLowerCase().includes(q));if(!items.length)return;
     html+=`<div class="pk-grp">${g.label}</div>`;
     items.forEach(i=>{const used=linked.has(i.id);
-      html+=`<div class="pk-item${used?' used':''}" onclick="${used?'':'linkEnt(\''+i.id+'\')'}">
+      html+=`<div class="pk-item${used?' used':''}" onclick="${used?'':'linkEnt(''+i.id+'')'}">
         <div class="pk-dot" style="background:${i.color}"></div>
         <div class="pk-info"><div class="pk-name">${i.name}</div><div class="pk-sub">${i.role||''}</div></div>
         ${used?'<i class="ti ti-check pk-chk"></i>':''}
@@ -941,7 +949,7 @@ function renderBeatLinker(q){
     if(!items.length)return;
     html+=`<div class="pk-grp">${col}</div>`;
     items.forEach(b=>{const used=linked.has(b.id);const m=TYPE_META[b.type]||TYPE_META.action;
-      html+=`<div class="pk-item${used?' used':''}" onclick="${used?'':'linkBeatToChap(\''+b.id+'\')'}">
+      html+=`<div class="pk-item${used?' used':''}" onclick="${used?'':'linkBeatToChap(''+b.id+'')'}">
         <div class="pk-dot" style="background:${m.dot}"></div>
         <div class="pk-info"><div class="pk-name">${b.label}</div><div class="pk-sub">${b.text.substring(0,60)}</div></div>
         ${used?'<i class="ti ti-check pk-chk"></i>':''}
@@ -1023,21 +1031,12 @@ function renderBeats(){
       if(el){
         const handle=el.querySelector('.beat-drag-handle');
         if(handle){
-          // Desktop: only draggable when grabbing handle
           handle.addEventListener('mousedown',()=>el.setAttribute('draggable','true'));
-          document.addEventListener('mouseup',()=>el.removeAttribute('draggable'),{once:false});
-          el.addEventListener('dragstart',e=>{
-            _dragId=b.id;e.dataTransfer.effectAllowed='move';
-            setTimeout(()=>el.classList.add('dragging'),0);
-          });
-          el.addEventListener('dragend',()=>{
-            _dragId=null;el.removeAttribute('draggable');
-            document.querySelectorAll('.beat-card').forEach(c=>c.classList.remove('dragging'));
-            document.querySelectorAll('.act-body').forEach(c=>c.classList.remove('drag-over'));
-          });
+          document.addEventListener('mouseup',()=>el.removeAttribute('draggable'));
+          el.addEventListener('dragstart',e=>{_dragId=b.id;e.dataTransfer.effectAllowed='move';setTimeout(()=>el.classList.add('dragging'),0);});
+          el.addEventListener('dragend',()=>{_dragId=null;el.removeAttribute('draggable');document.querySelectorAll('.beat-card').forEach(c=>c.classList.remove('dragging'));document.querySelectorAll('.act-body').forEach(c=>c.classList.remove('drag-over'));});
         }
-        // Touch drag
-        setupTouchDrag(el, b.id);
+        setupTouchDrag(el,b.id);
       }
     });
   });
@@ -1051,21 +1050,19 @@ function beatCardHtml(b){
   const m=TYPE_META[b.type]||TYPE_META.action;
   const lnked=b.chapLinks&&b.chapLinks.length;
   const depth=b.depth||1;
-  return `<div class="beat-card depth-${Math.min(depth,4)}" id="be-${b.id}">
-    <div class="beat-card-top">
-      <div class="beat-drag-handle" data-id="${b.id}"><i class="ti ti-grip-vertical"></i></div>
-      <div class="beat-card-actions">
-        <button class="beat-act-btn" onclick="editBeat('${b.id}')" title="Modifier"><i class="ti ti-edit"></i></button>
-        <button class="beat-act-btn beat-act-del" onclick="deleteBeat('${b.id}')" title="Supprimer"><i class="ti ti-trash"></i></button>
-      </div>
-    </div>
-    <div class="beat-lbl">${b.label||''}</div>
-    <div class="beat-txt">${b.text}</div>
-    <div class="beat-foot">
-      <span class="btype bt-${b.type}" style="background:${m.bg};color:${m.fg};">${b.type}</span>
-      ${lnked?`<span class="beat-lnk-badge"><i class="ti ti-link" style="font-size:9px;"></i>${b.chapLinks.length}</span>`:''}
-    </div>
-  </div>`;
+  let card='<div class="beat-card depth-'+Math.min(depth,4)+'" id="be-'+b.id+'">';
+  card+='<div class="beat-card-top">';
+  card+='<div class="beat-drag-handle" data-id="'+b.id+'"><i class="ti ti-grip-vertical"></i></div>';
+  card+='<div class="beat-card-actions">';
+  card+='<button class="beat-act-btn" onclick="editBeat(''+b.id+'')" title="Modifier"><i class="ti ti-edit"></i></button>';
+  card+='<button class="beat-act-btn beat-act-del" onclick="deleteBeat(''+b.id+'')" title="Supprimer"><i class="ti ti-trash"></i></button>';
+  card+='</div></div>';
+  card+='<div class="beat-lbl">'+escH(b.label||'')+'</div>';
+  card+='<div class="beat-txt">'+escH(b.text||'')+'</div>';
+  card+='<div class="beat-foot"><span class="btype bt-'+b.type+'" style="background:'+m.bg+';color:'+m.fg+';">'+b.type+'</span>';
+  if(lnked)card+='<span class="beat-lnk-badge"><i class="ti ti-link" style="font-size:9px;"></i>'+b.chapLinks.length+'</span>';
+  card+='</div></div>';
+  return card;
 }
 
 function addCol(vid){const name='Colonne '+(getVolCols(vid).length+1);S.beatCols[vid].push(name);renderBeats();}
@@ -1117,26 +1114,30 @@ function saveBeat(){
 }
 function editBeat(id){
   const b=gBeat(id);if(!b)return;
-  const vid=getActiveVol();
-  const cols=getVolCols(vid);
-  const volSel=S.volumes&&S.volumes.length?`<div class="fg"><label class="fl">Tome</label><select class="fsel" id="f-bvol"><option value="">Tous</option>${S.volumes.map(v=>`<option value="${v.id}"${v.id===b.vol?' selected':''}>${v.name}</option>`).join('')}</select></div>`:'';
-  document.getElementById('form-modal').innerHTML=`<h3>Modifier le beat<button class="m-close" onclick="closeFormDirect()">×</button></h3>
-    <div class="fg"><label class="fl">Nom du beat</label><input class="fi" id="f-bl" value="${(b.label||'').replace(/"/g,'&quot;')}"/></div>
-    <div class="fg"><label class="fl">Description</label><textarea class="fta" id="f-bt" style="min-height:80px;">${b.text.replace(/</g,'&lt;')}</textarea></div>
-    <div class="fg"><label class="fl">Type</label><select class="fsel" id="f-btype">
-      <option value="action"${b.type==='action'?' selected':''}>Action</option>
-      <option value="conflit"${b.type==='conflit'?' selected':''}>Conflit</option>
-      <option value="revelation"${b.type==='revelation'?' selected':''}>Révélation</option>
-      <option value="tournant"${b.type==='tournant'?' selected':''}>Tournant</option>
-      <option value="emotion"${b.type==='emotion'?' selected':''}>Émotion</option>
-    </select></div>
-    ${volSel}
-    <div class="fg"><label class="fl">Colonne</label><select class="fsel" id="f-bcol">${cols.map(c=>`<option value="${c}"${c===b.col?' selected':''}>${c}</option>`).join('')}</select></div>
-    <div class="m-btns">
-      <button class="m-cancel" onclick="closeFormDirect()">Annuler</button>
-      <button class="btn-d m-cancel" onclick="deleteBeat('${id}');closeFormDirect()" style="background:var(--red-bg);border-color:rgba(180,60,55,.3);color:var(--red-fg);">Supprimer</button>
-      <button class="m-ok" onclick="updateBeat('${id}')">Enregistrer</button>
-    </div>`;
+  const cols=getVolCols(getActiveVol?getActiveVol():'');
+  let volSel='';
+  if(S.volumes&&S.volumes.length){
+    volSel='<div class="fg"><label class="fl">Tome</label><select class="fsel" id="f-bvol"><option value="">Tous</option>';
+    S.volumes.forEach(v=>{volSel+='<option value="'+v.id+'"'+(v.id===b.vol?' selected':'')+'>'+escH(v.name)+'</option>';});
+    volSel+='</select></div>';
+  }
+  let colOpts='';cols.forEach(c=>{colOpts+='<option value="'+escH(c)+'"'+(c===b.col?' selected':'')+'>'+escH(c)+'</option>';});
+  document.getElementById('form-modal').innerHTML=
+    '<h3>Modifier le beat<button class="m-close" onclick="closeFormDirect()">×</button></h3>'+
+    '<div class="fg"><label class="fl">Nom</label><input class="fi" id="f-bl" value="'+escH(b.label||'')+'"/></div>'+
+    '<div class="fg"><label class="fl">Description</label><textarea class="fta" id="f-bt" style="min-height:80px;">'+escH(b.text||'')+'</textarea></div>'+
+    '<div class="fg"><label class="fl">Type</label><select class="fsel" id="f-btype">'+
+    '<option value="action"'+(b.type==='action'?' selected':'')+'>Action</option>'+
+    '<option value="conflit"'+(b.type==='conflit'?' selected':'')+'>Conflit</option>'+
+    '<option value="revelation"'+(b.type==='revelation'?' selected':'')+'>Révélation</option>'+
+    '<option value="tournant"'+(b.type==='tournant'?' selected':'')+'>Tournant</option>'+
+    '<option value="emotion"'+(b.type==='emotion'?' selected':'')+'>Émotion</option>'+
+    '</select></div>'+volSel+
+    '<div class="fg"><label class="fl">Colonne</label><select class="fsel" id="f-bcol">'+colOpts+'</select></div>'+
+    '<div class="m-btns">'+
+    '<button class="m-cancel" onclick="closeFormDirect()">Annuler</button>'+
+    '<button class="m-cancel" onclick="deleteBeat(''+id+'');closeFormDirect()" style="background:var(--red-bg);border-color:rgba(180,60,55,.3);color:var(--red-fg);">Supprimer</button>'+
+    '<button class="m-ok" onclick="updateBeat(''+id+'')">Enregistrer</button></div>';
   document.getElementById('ov-form').classList.add('open');
   setTimeout(()=>document.getElementById('f-bl').focus(),80);
 }
@@ -1147,71 +1148,9 @@ function updateBeat(id){
   b.type=document.getElementById('f-btype').value;
   b.col=document.getElementById('f-bcol').value;
   const volEl=document.getElementById('f-bvol');if(volEl)b.vol=volEl.value||undefined;
-  closeFormDirect();renderBeats();notify('Beat modifié');
+  closeFormDirect();renderBeats();saveAll();notify('Beat modifié');
 }
 function deleteBeat(id){S.beats=S.beats.filter(b=>b.id!==id);S.chapters.forEach(c=>{c.beatLinks=(c.beatLinks||[]).filter(x=>x!==id);});renderBeats();updateGP();notify('Beat supprimé');}
-
-// ══════════════════════════════════════════════
-//  TOUCH DRAG FOR BEATS
-// ══════════════════════════════════════════════
-let _touchDragId=null,_touchClone=null,_touchLastCol=null,_touchOffX=0,_touchOffY=0;
-
-function setupTouchDrag(cardEl,beatId){
-  const handle=cardEl.querySelector('.beat-drag-handle');
-  if(!handle)return;
-
-  handle.addEventListener('touchstart',e=>{
-    e.preventDefault();
-    _touchDragId=beatId;
-    const touch=e.touches[0];
-    const rect=cardEl.getBoundingClientRect();
-    _touchOffX=touch.clientX-rect.left;
-    _touchOffY=touch.clientY-rect.top;
-
-    _touchClone=cardEl.cloneNode(true);
-    _touchClone.style.cssText=`position:fixed;z-index:9999;width:${rect.width}px;left:${rect.left}px;top:${rect.top}px;opacity:.88;pointer-events:none;transform:rotate(1.5deg) scale(1.04);transition:none;box-shadow:0 10px 36px rgba(0,0,0,.55);border-radius:5px;`;
-    document.body.appendChild(_touchClone);
-    cardEl.style.opacity='.2';
-  },{passive:false});
-
-  handle.addEventListener('touchmove',e=>{
-    if(!_touchDragId||!_touchClone)return;
-    e.preventDefault();
-    const touch=e.touches[0];
-    _touchClone.style.left=(touch.clientX-_touchOffX)+'px';
-    _touchClone.style.top=(touch.clientY-_touchOffY)+'px';
-
-    document.querySelectorAll('.act-body').forEach(c=>c.classList.remove('drag-over'));
-    _touchLastCol=null;
-    // elementsFromPoint to find target column
-    const underEls=document.elementsFromPoint(touch.clientX,touch.clientY);
-    for(const el of underEls){
-      if(el.classList&&el.classList.contains('act-body')){
-        el.classList.add('drag-over');
-        const inp=el.previousElementSibling&&el.previousElementSibling.querySelector('.act-hdr-rename');
-        if(inp)_touchLastCol=inp.value;
-        break;
-      }
-    }
-  },{passive:false});
-
-  function endTouch(){
-    if(!_touchDragId)return;
-    if(_touchClone){_touchClone.remove();_touchClone=null;}
-    const src=document.getElementById('be-'+_touchDragId);
-    if(src)src.style.opacity='';
-    document.querySelectorAll('.act-body').forEach(c=>c.classList.remove('drag-over'));
-    if(_touchLastCol){
-      const b=gBeat(_touchDragId);
-      if(b&&b.col!==_touchLastCol){b.col=_touchLastCol;notify('Beat → '+_touchLastCol);}
-      renderBeats();
-    }
-    _touchDragId=null;_touchLastCol=null;
-  }
-
-  handle.addEventListener('touchend',endTouch,{passive:false});
-  handle.addEventListener('touchcancel',endTouch,{passive:false});
-}
 
 // ══════════════════════════════════════════════
 //  MD IMPORT — PARSER
@@ -1250,8 +1189,9 @@ function onMdFileLoaded(e){
 
 function parseMd(raw){
   // clean escaped chars from markdown
-  const text=raw.replace(/\\-/g,'-').replace(/\\!/g,'!').replace(/\\\./g,'.').replace(/\\\[/g,'[').replace(/\\\]/g,']').replace(/\\\(/g,'(').replace(/\\\)/g,')');
-  const lines=text.split('\n');
+  const text=raw.replace(/\-/g,'-').replace(/\!/g,'!').replace(/\\./g,'.').replace(/\\[/g,'[').replace(/\\]/g,']').replace(/\\(/g,'(').replace(/\\)/g,')');
+  const lines=text.split('\
+');
 
   // detect volumes: lines matching # Tome or # Volume or any # heading that looks like a tome
   const volPattern=/^#\s+(tome|volume|book|saison)\s+/i;
@@ -1270,9 +1210,9 @@ function parseMd(raw){
   function getDepth(line){
     // count leading spaces/tabs
     let i=0;
-    while(i<line.length&&(line[i]===' '||line[i]==='\t')){i++;}
+    while(i<line.length&&(line[i]===' '||line[i]==='\	')){i++;}
     // 2 spaces = 1 level, tab = 1 level
-    const spaces=line.substring(0,i).replace(/\t/g,'  ').length;
+    const spaces=line.substring(0,i).replace(/\	/g,'  ').length;
     return Math.floor(spaces/2)+1;
   }
   function isBullet(line){return /^\s*[-*]\s/.test(line);}
@@ -1388,38 +1328,54 @@ function renderDb(){
 }
 function renderChars(q,body){
   const items=S.characters.filter(c=>!q||(c.name||'').toLowerCase().includes(q)||(c.role||'').toLowerCase().includes(q));
-  body.innerHTML=`<div class="db-grid">${items.map(c=>{const n=S.chapters.filter(ch=>(ch.backlinks||[]).includes(c.id)).length;
-    return `<div class="db-card" onclick="openDetail('${c.id}')">
-      <div class="db-card-av" style="background:${c.color}22;color:${c.color};">${c.initials}</div>
-      <div class="db-card-name">${c.name}</div><div class="db-card-role">${c.role}</div>
-      <div class="db-card-tags">${(c.tags||[]).slice(0,3).map(t=>{const[bg,fg]=tagColor(t,S.allTags);return `<span class="tag-pill" style="background:${bg};color:${fg};font-size:10px;">${t}</span>`;}).join('')}</div>
-      <div class="db-card-meta"><i class="ti ti-link" style="font-size:10px;"></i> ${(c.backlinks||[]).length} lien(s) · ${n} chap.</div>
-    </div>`;}).join('')}${addCard()}</div>`;
+  let out='<div class="db-grid">';
+  items.forEach(c=>{
+    const n=S.chapters.filter(ch=>(ch.backlinks||[]).includes(c.id)).length;
+    const tagPills=(c.tags||[]).slice(0,3).map(t=>{const[bg,fg]=tagColor(t,S.allTags);return '<span class="tag-pill" style="background:'+bg+';color:'+fg+';font-size:10px;">'+escH(t)+'</span>';}).join('');
+    out+='<div class="db-card" onclick="openDetail(''+c.id+'')">';
+    out+='<div class="db-card-av" style="background:'+c.color+'22;color:'+c.color+';">'+escH(c.initials)+'</div>';
+    out+='<div class="db-card-name">'+escH(c.name)+'</div>';
+    out+='<div class="db-card-role">'+escH(c.role||'')+'</div>';
+    out+='<div class="db-card-tags">'+tagPills+'</div>';
+    out+='<div class="db-card-meta"><i class="ti ti-link" style="font-size:10px;"></i> '+(c.backlinks||[]).length+' lien(s) · '+n+' chap.</div>';
+    out+='</div>';
+  });
+  out+=addCard()+'</div>';
+  body.innerHTML=out;
 }
+
 function renderLocs(q,body){
   const items=S.locations.filter(l=>!q||(l.name||'').toLowerCase().includes(q));
   const bgs=['rgba(100,80,180,.1)','rgba(180,60,55,.09)','rgba(50,130,120,.1)','rgba(180,140,50,.09)','rgba(55,90,180,.1)'];
-  body.innerHTML=`<div class="db-grid">${items.map((l,i)=>`
-    <div class="db-card" onclick="openDetail('${l.id}')" style="padding:0;overflow:hidden;">
-      <div class="loc-thumb" style="background:${bgs[i%bgs.length]};">${l.icon}</div>
-      <div style="padding:10px 12px;">
-        <div class="db-card-name">${l.name}</div>
-        <div class="db-card-role" style="margin-bottom:5px;">${(l.desc||'').substring(0,55)}…</div>
-        <div class="db-card-tags">${(l.tags||[]).slice(0,3).map(t=>{const[bg,fg]=tagColor(t,S.allTags);return `<span class="tag-pill" style="background:${bg};color:${fg};font-size:10px;">${t}</span>`;}).join('')}</div>
-      </div>
-    </div>`).join('')}${addCard()}</div>`;
+  let out='<div class="db-grid">';
+  items.forEach((l,i)=>{
+    const tagPills=(l.tags||[]).slice(0,3).map(t=>{const[bg,fg]=tagColor(t,S.allTags);return '<span class="tag-pill" style="background:'+bg+';color:'+fg+';font-size:10px;">'+escH(t)+'</span>';}).join('');
+    out+='<div class="db-card" onclick="openDetail(''+l.id+'')" style="padding:0;overflow:hidden;">';
+    out+='<div class="loc-thumb" style="background:'+bgs[i%bgs.length]+';">'+escH(l.icon||'📍')+'</div>';
+    out+='<div style="padding:10px 12px;"><div class="db-card-name">'+escH(l.name)+'</div>';
+    out+='<div class="db-card-role">'+escH(l.type||'')+'</div>';
+    out+='<div class="db-card-tags">'+tagPills+'</div></div></div>';
+  });
+  out+=addCard()+'</div>';
+  body.innerHTML=out;
 }
+
 function renderCons(q,body){
   const items=S.concepts.filter(c=>!q||(c.name||'').toLowerCase().includes(q));
-  body.innerHTML=`<div class="db-grid">${items.map(c=>`
-    <div class="db-card" onclick="openDetail('${c.id}')">
-      <div class="con-icon">${c.icon||'💡'}</div>
-      <div class="db-card-name">${c.name}</div>
-      <div class="db-card-role" style="margin-bottom:5px;">${(c.desc||'').substring(0,65)}…</div>
-      <div class="db-card-tags">${(c.tags||[]).slice(0,3).map(t=>{const[bg,fg]=tagColor(t,S.allTags);return `<span class="tag-pill" style="background:${bg};color:${fg};font-size:10px;">${t}</span>`;}).join('')}</div>
-      <div class="db-card-meta"><i class="ti ti-link" style="font-size:10px;"></i> ${(c.backlinks||[]).length} lien(s)</div>
-    </div>`).join('')}${addCard()}</div>`;
+  let out='<div class="db-grid">';
+  items.forEach(c=>{
+    const tagPills=(c.tags||[]).slice(0,3).map(t=>{const[bg,fg]=tagColor(t,S.allTags);return '<span class="tag-pill" style="background:'+bg+';color:'+fg+';font-size:10px;">'+escH(t)+'</span>';}).join('');
+    out+='<div class="db-card" onclick="openDetail(''+c.id+'')">';
+    out+='<div class="db-card-av" style="background:var(--purple-bg);color:var(--purple-fg);font-size:18px;">'+escH(c.icon||'💡')+'</div>';
+    out+='<div class="db-card-name">'+escH(c.name)+'</div>';
+    out+='<div class="db-card-role">'+escH(c.type||'')+'</div>';
+    out+='<div class="db-card-tags">'+tagPills+'</div>';
+    out+='<div class="db-card-meta"><i class="ti ti-link" style="font-size:10px;"></i> '+(c.backlinks||[]).length+' lien(s)</div></div>';
+  });
+  out+=addCard()+'</div>';
+  body.innerHTML=out;
 }
+
 function renderTL(q,body){
   const items=S.timeline.filter(t=>!q||(t.title||'').toLowerCase().includes(q)||(t.desc||'').toLowerCase().includes(q));
   body.innerHTML=`<div style="max-width:680px;">
@@ -1448,13 +1404,13 @@ function openDbAdd(){
     <div class="m-btns"><button class="m-cancel" onclick="closeFormDirect()">Annuler</button><button class="m-ok" onclick="saveChar()">Ajouter</button></div>`;}
   else if(tab==='lieux'){html=`<h3>Nouveau lieu<button class="m-close" onclick="closeFormDirect()">×</button></h3>
     <div class="fg"><label class="fl">Nom</label><input class="fi" id="f-name"/></div>
-    <div class="fg"><label class="fl">Icône (emoji)</label><input class="fi" id="f-icon" placeholder="🏠"/></div>
+    <div class="fg"><label class="fl">Icône (emoji)</label><input class="fi" id="f-icon" placeholder="\ud83c\udfe0"/></div>
     <div class="fg"><label class="fl">Description</label><textarea class="fta" id="f-desc"></textarea></div>
     <div class="fg"><label class="fl">Tags</label><input class="fi" id="f-tags"/></div>
     <div class="m-btns"><button class="m-cancel" onclick="closeFormDirect()">Annuler</button><button class="m-ok" onclick="saveLoc()">Ajouter</button></div>`;}
   else if(tab==='concepts'){html=`<h3>Nouveau concept<button class="m-close" onclick="closeFormDirect()">×</button></h3>
     <div class="fg"><label class="fl">Nom</label><input class="fi" id="f-name"/></div>
-    <div class="fg"><label class="fl">Icône (emoji)</label><input class="fi" id="f-icon" placeholder="💡"/></div>
+    <div class="fg"><label class="fl">Icône (emoji)</label><input class="fi" id="f-icon" placeholder="\ud83d\udca1"/></div>
     <div class="fg"><label class="fl">Description</label><textarea class="fta" id="f-desc"></textarea></div>
     <div class="fg"><label class="fl">Tags</label><input class="fi" id="f-tags"/></div>
     <div class="m-btns"><button class="m-cancel" onclick="closeFormDirect()">Annuler</button><button class="m-ok" onclick="saveCon()">Ajouter</button></div>`;}
@@ -1480,13 +1436,13 @@ function saveChar(){
 function saveLoc(){
   const name=(document.getElementById('f-name').value||'').trim();if(!name){notify('Nom requis');return;}
   const tags=parseTags('f-tags');const pal=['#6868c0','#c05858','#4a9e8a','#c8ac60','#4a78c4'];
-  S.locations.push({id:'l'+Date.now(),name,icon:document.getElementById('f-icon').value||'📍',color:pal[S.locations.length%pal.length],desc:document.getElementById('f-desc').value,tags,backlinks:[]});
+  S.locations.push({id:'l'+Date.now(),name,icon:document.getElementById('f-icon').value||'\ud83d\udccd',color:pal[S.locations.length%pal.length],desc:document.getElementById('f-desc').value,tags,backlinks:[]});
   closeFormDirect();renderDb();renderSidebar();notify('Lieu ajouté');
 }
 function saveCon(){
   const name=(document.getElementById('f-name').value||'').trim();if(!name){notify('Nom requis');return;}
   const tags=parseTags('f-tags');
-  S.concepts.push({id:'cn'+Date.now(),name,icon:document.getElementById('f-icon').value||'💡',color:'#58ba78',desc:document.getElementById('f-desc').value,tags,backlinks:[]});
+  S.concepts.push({id:'cn'+Date.now(),name,icon:document.getElementById('f-icon').value||'\ud83d\udca1',color:'#58ba78',desc:document.getElementById('f-desc').value,tags,backlinks:[]});
   closeFormDirect();renderDb();renderSidebar();notify('Concept ajouté');
 }
 function saveTL(){
@@ -1513,7 +1469,7 @@ function openDetail(id){
     <div class="detail-sec"><div class="detail-lbl">Liens</div>${renderLinks(char.backlinks)}</div>
     <div class="m-btns"><button class="m-cancel" onclick="closeDetailDirect()">Fermer</button></div>`;}
   else if(loc){html=`<div style="display:flex;align-items:center;gap:9px;margin-bottom:14px;"><span style="font-size:26px;">${loc.icon}</span><div style="font-family:var(--serif);font-size:17px;color:var(--t);">${loc.name}</div><button class="m-close" style="margin-left:auto;" onclick="closeDetailDirect()">×</button></div>${df('Description',loc.desc)}<div class="detail-sec"><div class="detail-lbl">Tags</div><div>${renderTagsD(loc.tags)}</div></div><div class="detail-sec"><div class="detail-lbl">Liens</div>${renderLinks(loc.backlinks)}</div><div class="m-btns"><button class="m-cancel" onclick="closeDetailDirect()">Fermer</button></div>`;}
-  else if(cn){html=`<div style="display:flex;align-items:center;gap:9px;margin-bottom:14px;"><span style="font-size:24px;">${cn.icon||'💡'}</span><div style="font-family:var(--serif);font-size:17px;color:var(--t);">${cn.name}</div><button class="m-close" style="margin-left:auto;" onclick="closeDetailDirect()">×</button></div>${df('Description',cn.desc)}<div class="detail-sec"><div class="detail-lbl">Tags</div><div>${renderTagsD(cn.tags)}</div></div><div class="detail-sec"><div class="detail-lbl">Liens</div>${renderLinks(cn.backlinks)}</div><div class="m-btns"><button class="m-cancel" onclick="closeDetailDirect()">Fermer</button></div>`;}
+  else if(cn){html=`<div style="display:flex;align-items:center;gap:9px;margin-bottom:14px;"><span style="font-size:24px;">${cn.icon||'\ud83d\udca1'}</span><div style="font-family:var(--serif);font-size:17px;color:var(--t);">${cn.name}</div><button class="m-close" style="margin-left:auto;" onclick="closeDetailDirect()">×</button></div>${df('Description',cn.desc)}<div class="detail-sec"><div class="detail-lbl">Tags</div><div>${renderTagsD(cn.tags)}</div></div><div class="detail-sec"><div class="detail-lbl">Liens</div>${renderLinks(cn.backlinks)}</div><div class="m-btns"><button class="m-cancel" onclick="closeDetailDirect()">Fermer</button></div>`;}
   document.getElementById('detail-modal').innerHTML=html;
   document.getElementById('ov-detail').classList.add('open');
 }
@@ -1632,12 +1588,7 @@ function delProj(e,id){e.stopPropagation();if(projects.length===1){notify('Impos
 // ══════════════════════════════════════════════
 //  SAVE / EXPORT / IMPORT
 // ══════════════════════════════════════════════
-function saveProject(){
-  saveCurrentChapter();
-  saveAll(); // always save to localStorage first
-  if(driveIsConnected())driveSave();
-  else notify('✓ Sauvegardé (local)');
-}
+function saveProject(){saveCurrentChapter();saveAll();notify('✓ Sauvegardé');}
 function exportProject(){
   saveCurrentChapter();const proj=projects.find(p=>p.id===currentProjectId);
   const blob=new Blob([JSON.stringify(proj.data,null,2)],{type:'application/json'});
@@ -1652,260 +1603,11 @@ function onImportProjFile(e){
   reader.readAsText(file);e.target.value='';
 }
 
-
-// ══════════════════════════════════════════════
-//  GOOGLE DRIVE SYNC
-// ══════════════════════════════════════════════
-const DRIVE_CLIENT_ID = '951564933990-oh5n6buha9bncmn8gu00edv3f1gecah4.apps.googleusercontent.com';
-const DRIVE_SCOPES    = 'https://www.googleapis.com/auth/drive.file';
-const DRIVE_FILENAME  = 'le-redacteur-data.json';
-
-let _driveToken      = null;   // current access token
-let _driveFileId     = null;   // Drive file ID once found/created
-let _driveSaveTimer  = null;   // debounce timer
-let _gapiReady       = false;
-let _gisReady        = false;
-
-// ── State helpers ─────────────────────────────
-function driveIsConnected(){ return !!_driveToken; }
-
-function driveSetStatus(state, label){
-  const btn = document.getElementById('drive-btn');
-  const dot = document.getElementById('drive-dot');
-  const lbl = document.getElementById('drive-label');
-  if(!btn) return;
-  btn.className = 'drive-btn' + (state ? ' '+state : '');
-  dot.className = 'drive-dot' + (state==='syncing' ? ' pulse' : '');
-  lbl.textContent = label || 'Drive';
-}
-
-// ── Initialise GAPI + GIS ────────────────────
-function driveInit(){
-  // Load GAPI
-  if(typeof gapi !== 'undefined'){
-    gapi.load('client', ()=>{
-      gapi.client.init({
-        discoveryDocs:['https://www.googleapis.com/discovery/v1/apis/drive/v3/rest'],
-      }).then(()=>{ _gapiReady=true; driveCheckReady(); });
-    });
-  } else {
-    // retry until gapi loads
-    setTimeout(driveInit, 600);
-    return;
-  }
-  // GIS is loaded async — check periodically
-  const gisTimer = setInterval(()=>{
-    if(typeof google !== 'undefined' && google.accounts){ 
-      clearInterval(gisTimer);
-      _gisReady=true; 
-      driveCheckReady();
-    }
-  }, 400);
-}
-
-function driveCheckReady(){
-  if(!_gapiReady || !_gisReady) return;
-  // Restore saved token from localStorage
-  try{
-    const saved = localStorage.getItem('le-redacteur-drive-token');
-    if(saved){
-      const t = JSON.parse(saved);
-      if(t.expires > Date.now()){
-        _driveToken = t.token;
-        gapi.client.setToken({access_token: _driveToken});
-        driveSetStatus('connected','Drive ✓');
-        driveLoadIfNewer(); // silently pull latest on open
-        return;
-      }
-    }
-  } catch(e){}
-  driveSetStatus('','Drive');
-}
-
-// ── Toggle connect/disconnect ─────────────────
-function driveToggle(){
-  if(driveIsConnected()){
-    driveDisconnect();
-  } else {
-    driveConnect();
-  }
-}
-
-function driveConnect(){
-  if(DRIVE_CLIENT_ID === 'YOUR_CLIENT_ID'){
-    alert('Configurez votre Client ID Google dans le fichier (ligne DRIVE_CLIENT_ID).');
-    return;
-  }
-  if(!_gisReady || !_gapiReady){
-    notify('Chargement Google API…');
-    setTimeout(driveConnect, 800);
-    return;
-  }
-  driveSetStatus('syncing','Connexion…');
-  const client = google.accounts.oauth2.initTokenClient({
-    client_id: DRIVE_CLIENT_ID,
-    scope: DRIVE_SCOPES,
-    callback: (resp)=>{
-      if(resp.error){ driveSetStatus('error','Erreur'); notify('Erreur Drive : '+resp.error); return; }
-      _driveToken = resp.access_token;
-      gapi.client.setToken({access_token: _driveToken});
-      // Save token with expiry (55 min)
-      localStorage.setItem('le-redacteur-drive-token', JSON.stringify({
-        token: _driveToken, expires: Date.now() + 55*60*1000
-      }));
-      driveSetStatus('connected','Drive ✓');
-      notify('✓ Connecté à Google Drive');
-      driveLoadIfNewer();
-    },
-  });
-  client.requestAccessToken({prompt:''});
-}
-
-function driveDisconnect(){
-  _driveToken = null;
-  _driveFileId = null;
-  localStorage.removeItem('le-redacteur-drive-token');
-  gapi.client.setToken(null);
-  if(typeof google !== 'undefined' && google.accounts)
-    google.accounts.oauth2.revoke(_driveToken || '', ()=>{});
-  driveSetStatus('','Drive');
-  notify('Déconnecté de Drive');
-}
-
-// ── Find or create the Drive file ────────────
-async function driveFindFile(){
-  if(_driveFileId) return _driveFileId;
-  const res = await gapi.client.drive.files.list({
-    q: `name='${DRIVE_FILENAME}' and trashed=false`,
-    spaces:'drive',
-    fields:'files(id,name,modifiedTime)',
-  });
-  const files = res.result.files || [];
-  if(files.length){ _driveFileId = files[0].id; return _driveFileId; }
-  // Create new file
-  const meta = await gapi.client.drive.files.create({
-    resource:{ name: DRIVE_FILENAME, mimeType:'application/json' },
-    fields:'id',
-  });
-  _driveFileId = meta.result.id;
-  return _driveFileId;
-}
-
-// ── Save to Drive (debounced 1.5s) ────────────
-function driveSave(){
-  clearTimeout(_driveSaveTimer);
-  _driveSaveTimer = setTimeout(async ()=>{
-    if(!driveIsConnected()) return;
-    driveSetStatus('syncing','Sync…');
-    try{
-      const fileId = await driveFindFile();
-      const payload = JSON.stringify({projects, currentProjectId});
-      await gapi.client.request({
-        path: `/upload/drive/v3/files/${fileId}`,
-        method:'PATCH',
-        params:{ uploadType:'media' },
-        headers:{'Content-Type':'application/json'},
-        body: payload,
-      });
-      driveSetStatus('connected','Drive ✓');
-      notify('✓ Sauvegardé sur Drive');
-    } catch(e){
-      console.error('Drive save error',e);
-      driveSetStatus('error','Erreur');
-      notify('Erreur Drive — données sauvegardées en local');
-    }
-  }, 1500);
-}
-
-// ── Load from Drive (on connect, checks if newer) ─
-async function driveLoadIfNewer(){
-  if(!driveIsConnected()) return;
-  driveSetStatus('syncing','Chargement…');
-  try{
-    const fileId = await driveFindFile();
-    if(!fileId){ driveSetStatus('connected','Drive ✓'); return; }
-    const res = await gapi.client.drive.files.get({
-      fileId, alt:'media',
-    });
-    const data = typeof res.result === 'string' ? JSON.parse(res.result) : res.result;
-    if(data && data.projects && data.projects.length){
-      projects = data.projects;
-      currentProjectId = data.currentProjectId || projects[0].id;
-      S = projects.find(p=>p.id===currentProjectId)?.data || projects[0].data;
-      ensureChapter();
-      saveAll(); // mirror to localStorage
-      renderSidebar();
-      loadEditor();
-      renderSagaTabs();
-      driveSetStatus('connected','Drive ✓');
-      notify('✓ Données chargées depuis Drive');
-    } else {
-      // File exists but empty — push local data
-      driveSave();
-    }
-  } catch(e){
-    // File not found or empty — first time, push local
-    if(e?.result?.error?.code === 404 || !_driveFileId){
-      _driveFileId = null;
-      driveSave();
-    } else {
-      console.error('Drive load error',e);
-      driveSetStatus('error','Erreur');
-    }
-  }
-}
-
-// ── Auto-save to Drive whenever data changes ─
-// Patch saveAll to also trigger Drive sync
-const _origSaveAll = saveAll;
-// (we override after declaration)
-
 // ══════════════════════════════════════════════
 //  INIT
 // ══════════════════════════════════════════════
-
-function renderChapNav(){
-  const tabs=document.getElementById('chap-nav-tabs');
-  if(!tabs)return;
-  tabs.innerHTML=S.chapters.map(c=>`
-    <button class="chap-nav-tab${c.id===S.activeChapter?' active':''}" onclick="selectChapter('${c.id}')" title="${(c.title||'').replace(/"/g,'&quot;')}">
-      ${(c.title||'(Sans titre)').substring(0,22)}${(c.title||'').length>22?'…':''}
-    </button>`).join('');
-  // scroll active tab into view
-  const active=tabs.querySelector('.chap-nav-tab.active');
-  if(active)setTimeout(()=>active.scrollIntoView({inline:'center',block:'nearest'}),50);
-  // update prev/next buttons
-  const idx=S.chapters.findIndex(c=>c.id===S.activeChapter);
-  const prev=document.getElementById('chap-prev');
-  const next=document.getElementById('chap-next');
-  if(prev)prev.disabled=idx<=0;
-  if(next)next.disabled=idx>=S.chapters.length-1;
-}
-function chapNavStep(dir){
-  const idx=S.chapters.findIndex(c=>c.id===S.activeChapter);
-  const target=S.chapters[idx+dir];
-  if(target)selectChapter(target.id);
-}
 loadAll();
 renderSidebar();
-// Patch saveAll to also trigger Drive sync after the fact
-const _saveAllOrig = saveAll;
-function saveAll(){
-  _saveAllOrig();
-  if(driveIsConnected()){
-    clearTimeout(_driveSaveTimer);
-    _driveSaveTimer = setTimeout(async()=>{
-      if(!driveIsConnected())return;
-      driveSetStatus('syncing','Sync…');
-      try{
-        const fileId=await driveFindFile();
-        const payload=JSON.stringify({projects,currentProjectId});
-        await gapi.client.request({path:`/upload/drive/v3/files/${fileId}`,method:'PATCH',params:{uploadType:'media'},headers:{'Content-Type':'application/json'},body:payload});
-        driveSetStatus('connected','Drive ✓');
-      } catch(e){ driveSetStatus('error','Erreur'); }
-    }, 1500);
-  }
-}
 driveInit();
 loadEditor();
 document.getElementById('struct-sel').value=S.currentStruct||'libre';
@@ -1915,29 +1617,63 @@ window.addEventListener('resize',()=>{if(_ap==='graph'){const c=document.getElem
 document.addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.key==='s'){e.preventDefault();saveProject();}});
 document.addEventListener('click',e=>{const s=document.getElementById('tag-sugs');if(s&&!s.contains(e.target)&&e.target.id!=='tag-in')s.style.display='none';});
 
-function setMobActive(id){
-  document.querySelectorAll('.mob-nav-btn').forEach(b=>b.classList.remove('active'));
-  const el=document.getElementById('mn-'+id);
-  if(el)el.classList.add('active');
+// ── TOUCH DRAG ────────────────────────────────────────────
+let _touchDragId=null,_touchClone=null,_touchLastCol=null,_touchOffX=0,_touchOffY=0;
+function setupTouchDrag(cardEl,beatId){
+  const handle=cardEl.querySelector('.beat-drag-handle');
+  if(!handle)return;
+  handle.addEventListener('touchstart',e=>{
+    e.preventDefault();
+    _touchDragId=beatId;
+    const touch=e.touches[0],rect=cardEl.getBoundingClientRect();
+    _touchOffX=touch.clientX-rect.left;_touchOffY=touch.clientY-rect.top;
+    _touchClone=cardEl.cloneNode(true);
+    _touchClone.style.cssText='position:fixed;z-index:9999;width:'+rect.width+'px;left:'+rect.left+'px;top:'+rect.top+'px;opacity:.88;pointer-events:none;transform:rotate(1.5deg) scale(1.04);transition:none;box-shadow:0 10px 36px rgba(0,0,0,.55);border-radius:5px;';
+    document.body.appendChild(_touchClone);cardEl.style.opacity='.2';
+  },{passive:false});
+  handle.addEventListener('touchmove',e=>{
+    if(!_touchDragId||!_touchClone)return;e.preventDefault();
+    const touch=e.touches[0];
+    _touchClone.style.left=(touch.clientX-_touchOffX)+'px';
+    _touchClone.style.top=(touch.clientY-_touchOffY)+'px';
+    document.querySelectorAll('.act-body').forEach(c=>c.classList.remove('drag-over'));
+    _touchLastCol=null;
+    const els=document.elementsFromPoint(touch.clientX,touch.clientY);
+    for(const el of els){if(el.classList&&el.classList.contains('act-body')){el.classList.add('drag-over');const inp=el.previousElementSibling&&el.previousElementSibling.querySelector('.act-hdr-rename');if(inp)_touchLastCol=inp.value;break;}}
+  },{passive:false});
+  function endTouch(){
+    if(!_touchDragId)return;
+    if(_touchClone){_touchClone.remove();_touchClone=null;}
+    const src=document.getElementById('be-'+_touchDragId);if(src)src.style.opacity='';
+    document.querySelectorAll('.act-body').forEach(c=>c.classList.remove('drag-over'));
+    if(_touchLastCol){const b=gBeat(_touchDragId);if(b&&b.col!==_touchLastCol){b.col=_touchLastCol;}renderBeats();}
+    _touchDragId=null;_touchLastCol=null;
+  }
+  handle.addEventListener('touchend',endTouch,{passive:false});
+  handle.addEventListener('touchcancel',endTouch,{passive:false});
 }
+
+function renderChapNav(){
+  const tabs=document.getElementById('chap-nav-tabs');if(!tabs)return;
+  let out='';
+  S.chapters.forEach(c=>{out+='<button class="chap-nav-tab'+(c.id===S.activeChapter?' active':'')+'" onclick="selectChapter(''+c.id+'')" title="'+escH(c.title||'')+'">'+escH((c.title||'(Sans titre)').substring(0,22))+((c.title||'').length>22?'…':'')+'</button>';});
+  tabs.innerHTML=out;
+  const active=tabs.querySelector('.chap-nav-tab.active');
+  if(active)setTimeout(()=>active.scrollIntoView({inline:'center',block:'nearest'}),50);
+  const idx=S.chapters.findIndex(c=>c.id===S.activeChapter);
+  const prev=document.getElementById('chap-prev'),next=document.getElementById('chap-next');
+  if(prev)prev.disabled=idx<=0;if(next)next.disabled=idx>=S.chapters.length-1;
+}
+function chapNavStep(dir){const idx=S.chapters.findIndex(c=>c.id===S.activeChapter);const t=S.chapters[idx+dir];if(t)selectChapter(t.id);}
+function setMobActive(id){document.querySelectorAll(".mob-nav-btn").forEach(b=>b.classList.remove("active"));const el=document.getElementById("mn-"+id);if(el)el.classList.add("active");}
 </script>
 
 <div class="mob-nav" id="mob-nav">
-  <button class="mob-nav-btn active" id="mn-editor" onclick="switchPanel('editor');setMobActive('editor')">
-    <i class="ti ti-edit"></i>Écriture
-  </button>
-  <button class="mob-nav-btn" id="mn-beats" onclick="switchPanel('beats');setMobActive('beats')">
-    <i class="ti ti-layout-columns"></i>Beats
-  </button>
-  <button class="mob-nav-btn" id="mn-db" onclick="switchPanel('db');setMobActive('db')">
-    <i class="ti ti-database"></i>Base
-  </button>
-  <button class="mob-nav-btn" id="mn-graph" onclick="switchPanel('graph');setMobActive('graph')">
-    <i class="ti ti-hierarchy-2"></i>Graphe
-  </button>
-  <button class="mob-nav-btn" id="mn-overview" onclick="switchPanel('overview');setMobActive('overview')">
-    <i class="ti ti-table"></i>Vue
-  </button>
+  <button class="mob-nav-btn active" id="mn-editor" onclick="switchPanel('editor');setMobActive('editor')"><i class="ti ti-edit"></i>Écriture</button>
+  <button class="mob-nav-btn" id="mn-beats" onclick="switchPanel('beats');setMobActive('beats')"><i class="ti ti-layout-columns"></i>Beats</button>
+  <button class="mob-nav-btn" id="mn-db" onclick="switchPanel('db');setMobActive('db')"><i class="ti ti-database"></i>Base</button>
+  <button class="mob-nav-btn" id="mn-graph" onclick="switchPanel('graph');setMobActive('graph')"><i class="ti ti-hierarchy-2"></i>Graphe</button>
+  <button class="mob-nav-btn" id="mn-overview" onclick="switchPanel('overview');setMobActive('overview')"><i class="ti ti-table"></i>Vue</button>
 </div>
 </body>
 </html>
