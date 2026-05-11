@@ -365,12 +365,14 @@ body{font-family:var(--sans);color:var(--t);}
 }
 </style>
 <script src="https://accounts.google.com/gsi/client" async>
-// ══ GOOGLE DRIVE ══════════════════════════════════════════
+// ══ GOOGLE DRIVE (fetch-based, no gapi discovery) ════════
 const DRIVE_CLIENT_ID='951564933990-oh5n6buha9bncmn8gu00edv3f1gecah4.apps.googleusercontent.com';
 const DRIVE_SCOPES='https://www.googleapis.com/auth/drive.file';
 const DRIVE_FILENAME='le-redacteur-data.json';
-let _driveToken=null,_driveFileId=null,_driveSaveTimer=null,_gapiReady=false,_gisReady=false;
+let _driveToken=null,_driveFileId=null,_driveSaveTimer=null,_gisReady=false,_tokenClient=null;
+
 function driveIsConnected(){return!!_driveToken;}
+
 function driveSetStatus(state,label){
   const btn=document.getElementById('drive-btn'),dot=document.getElementById('drive-dot'),lbl=document.getElementById('drive-label');
   if(!btn)return;
@@ -378,75 +380,141 @@ function driveSetStatus(state,label){
   dot.className='drive-dot'+(state==='syncing'?' pulse':'');
   lbl.textContent=label||'Drive';
 }
+
 function driveInit(){
-  const tryGapi=()=>{if(typeof gapi==='undefined'){setTimeout(tryGapi,600);return;}
-    gapi.load('client',()=>{gapi.client.init({discoveryDocs:['https://www.googleapis.com/discovery/v1/apis/drive/v3/rest']}).then(()=>{_gapiReady=true;driveCheckReady();});});};
-  tryGapi();
-  const t=setInterval(()=>{if(typeof google!=='undefined'&&google.accounts){clearInterval(t);_gisReady=true;driveCheckReady();}},400);
+  // Wait for GIS to load
+  const t=setInterval(()=>{
+    if(typeof google!=='undefined'&&google.accounts&&google.accounts.oauth2){
+      clearInterval(t);_gisReady=true;
+      _tokenClient=google.accounts.oauth2.initTokenClient({
+        client_id:DRIVE_CLIENT_ID,
+        scope:DRIVE_SCOPES,
+        callback:_driveTokenCallback,
+      });
+      // Restore saved token
+      try{
+        const s=localStorage.getItem('lr-drive-token');
+        if(s){const t=JSON.parse(s);if(t.expires>Date.now()){_driveToken=t.token;driveSetStatus('connected','Drive ✓');driveLoadIfNewer();return;}}
+      }catch(e){}
+      driveSetStatus('','Drive');
+    }
+  },300);
 }
-function driveCheckReady(){
-  if(!_gapiReady||!_gisReady)return;
-  try{const s=localStorage.getItem('lr-drive-token');if(s){const t=JSON.parse(s);if(t.expires>Date.now()){_driveToken=t.token;gapi.client.setToken({access_token:_driveToken});driveSetStatus('connected','Drive ✓');driveLoadIfNewer();return;}}}catch(e){}
-  driveSetStatus('','Drive');
+
+function _driveTokenCallback(resp){
+  if(resp.error){
+    driveSetStatus('error','Erreur');
+    notify('Drive: '+resp.error);
+    console.error('Drive token error:',resp);
+    return;
+  }
+  _driveToken=resp.access_token;
+  localStorage.setItem('lr-drive-token',JSON.stringify({token:_driveToken,expires:Date.now()+55*60*1000}));
+  driveSetStatus('connected','Drive ✓');
+  notify('✓ Connecté à Drive');
+  driveLoadIfNewer();
 }
+
 function driveToggle(){if(driveIsConnected())driveDisconnect();else driveConnect();}
+
 function driveConnect(){
-  if(!_gisReady||!_gapiReady){notify('Chargement API…');setTimeout(driveConnect,800);return;}
+  if(!_gisReady||!_tokenClient){notify('API en cours de chargement…');setTimeout(driveConnect,800);return;}
   driveSetStatus('syncing','Connexion…');
-  const client=google.accounts.oauth2.initTokenClient({client_id:DRIVE_CLIENT_ID,scope:DRIVE_SCOPES,
-    callback:(resp)=>{
-      if(resp.error){driveSetStatus('error','Erreur');notify('Erreur: '+resp.error);return;}
-      _driveToken=resp.access_token;gapi.client.setToken({access_token:_driveToken});
-      localStorage.setItem('lr-drive-token',JSON.stringify({token:_driveToken,expires:Date.now()+55*60*1000}));
-      driveSetStatus('connected','Drive ✓');notify('✓ Connecté à Drive');driveLoadIfNewer();
-    }});
-  client.requestAccessToken({prompt:''});
+  _tokenClient.requestAccessToken({prompt:''});
 }
+
 function driveDisconnect(){
-  const tok=_driveToken;_driveToken=null;_driveFileId=null;
+  const tok=_driveToken;
+  _driveToken=null;_driveFileId=null;
   localStorage.removeItem('lr-drive-token');
-  if(typeof gapi!=='undefined')gapi.client.setToken(null);
   try{if(typeof google!=='undefined'&&tok)google.accounts.oauth2.revoke(tok,()=>{});}catch(e){}
   driveSetStatus('','Drive');notify('Déconnecté de Drive');
 }
+
+// ── Pure fetch helpers ────────────────────────────────────
+function _driveHeaders(){return{Authorization:'Bearer '+_driveToken,'Content-Type':'application/json'};}
+
 async function driveFindFile(){
   if(_driveFileId)return _driveFileId;
-  const res=await gapi.client.drive.files.list({q:"name='"+DRIVE_FILENAME+"' and trashed=false",spaces:'drive',fields:'files(id)'});
-  const files=res.result.files||[];
-  if(files.length){_driveFileId=files[0].id;return _driveFileId;}
-  const meta=await gapi.client.drive.files.create({resource:{name:DRIVE_FILENAME,mimeType:'application/json'},fields:'id'});
-  _driveFileId=meta.result.id;return _driveFileId;
+  const r=await fetch("https://www.googleapis.com/drive/v3/files?q=name%3D'"+encodeURIComponent(DRIVE_FILENAME)+"'%20and%20trashed%3Dfalse&spaces=drive&fields=files(id)",
+    {headers:{Authorization:'Bearer '+_driveToken}});
+  if(!r.ok){const e=await r.text();throw new Error('list failed: '+r.status+' '+e);}
+  const j=await r.json();
+  if(j.files&&j.files.length){_driveFileId=j.files[0].id;return _driveFileId;}
+  // Create file
+  const cr=await fetch('https://www.googleapis.com/drive/v3/files?fields=id',{
+    method:'POST',headers:{Authorization:'Bearer '+_driveToken,'Content-Type':'application/json'},
+    body:JSON.stringify({name:DRIVE_FILENAME,mimeType:'application/json'})});
+  if(!cr.ok){const e=await cr.text();throw new Error('create failed: '+cr.status+' '+e);}
+  const cj=await cr.json();_driveFileId=cj.id;return _driveFileId;
 }
+
 function driveSave(){
   clearTimeout(_driveSaveTimer);
   _driveSaveTimer=setTimeout(async()=>{
-    if(!driveIsConnected())return;driveSetStatus('syncing','Sync…');
+    if(!driveIsConnected())return;
+    driveSetStatus('syncing','Sync…');
     try{
       const fileId=await driveFindFile();
-      await gapi.client.request({path:'/upload/drive/v3/files/'+fileId,method:'PATCH',params:{uploadType:'media'},headers:{'Content-Type':'application/json'},body:JSON.stringify({projects,currentProjectId})});
+      const payload=JSON.stringify({projects,currentProjectId});
+      const r=await fetch('https://www.googleapis.com/upload/drive/v3/files/'+fileId+'?uploadType=media',{
+        method:'PATCH',
+        headers:{Authorization:'Bearer '+_driveToken,'Content-Type':'application/json'},
+        body:payload});
+      if(!r.ok){const e=await r.text();throw new Error('save failed: '+r.status+' '+e);}
       driveSetStatus('connected','Drive ✓');
-    }catch(e){console.error(e);driveSetStatus('error','Erreur Drive');}
+    }catch(e){
+      console.error('driveSave error:',e);
+      driveSetStatus('error','Erreur');
+      notify('Erreur Drive — données sauvegardées en local');
+    }
   },1800);
 }
+
 async function driveLoadIfNewer(){
-  if(!driveIsConnected())return;driveSetStatus('syncing','Chargement…');
+  if(!driveIsConnected())return;
+  driveSetStatus('syncing','Chargement…');
   try{
-    const fileId=await driveFindFile();if(!fileId){driveSetStatus('connected','Drive ✓');return;}
-    const res=await gapi.client.drive.files.get({fileId,alt:'media'});
-    const data=typeof res.result==='string'?JSON.parse(res.result):res.result;
+    const fileId=await driveFindFile();
+    if(!fileId){driveSetStatus('connected','Drive ✓');return;}
+    const r=await fetch('https://www.googleapis.com/drive/v3/files/'+fileId+'?alt=media',
+      {headers:{Authorization:'Bearer '+_driveToken}});
+    if(r.status===404){_driveFileId=null;driveSave();driveSetStatus('connected','Drive ✓');return;}
+    if(!r.ok){const e=await r.text();throw new Error('load failed: '+r.status+' '+e);}
+    const text=await r.text();
+    if(!text||text.trim()===''){driveSave();driveSetStatus('connected','Drive ✓');return;}
+    const data=JSON.parse(text);
     if(data&&data.projects&&data.projects.length){
-      projects=data.projects;currentProjectId=data.currentProjectId||projects[0].id;
+      projects=data.projects;
+      currentProjectId=data.currentProjectId||projects[0].id;
       S=projects.find(p=>p.id===currentProjectId)?.data||projects[0].data;
       ensureChapter();
       try{localStorage.setItem(STORE_KEY,JSON.stringify({projects,currentProjectId}));}catch(e){}
-      renderSidebar();loadEditor();if(typeof renderSagaTabs==='function')renderSagaTabs();
-      driveSetStatus('connected','Drive ✓');notify('✓ Données chargées depuis Drive');
-    }else{driveSave();}
-  }catch(e){console.error(e);if(!_driveFileId)driveSave();else driveSetStatus('error','Erreur');}
+      renderSidebar();loadEditor();
+      if(typeof renderSagaTabs==='function')renderSagaTabs();
+      driveSetStatus('connected','Drive ✓');
+      notify('✓ Données chargées depuis Drive');
+    }else{
+      driveSave();driveSetStatus('connected','Drive ✓');
+    }
+  }catch(e){
+    console.error('driveLoadIfNewer error:',e);
+    // If load fails, try pushing local data instead
+    try{await driveSave_immediate();}catch(e2){}
+    driveSetStatus('connected','Drive ✓');
+  }
+}
+
+async function driveSave_immediate(){
+  const fileId=await driveFindFile();
+  const r=await fetch('https://www.googleapis.com/upload/drive/v3/files/'+fileId+'?uploadType=media',{
+    method:'PATCH',headers:{Authorization:'Bearer '+_driveToken,'Content-Type':'application/json'},
+    body:JSON.stringify({projects,currentProjectId})});
+  if(!r.ok)throw new Error('immediate save failed: '+r.status);
 }
 // ══ END DRIVE ═════════════════════════════════════════════
+
 </script>
-<script src="https://apis.google.com/js/api.js" async></script>
 </head>
 <body>
 <div class="app">
